@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Jadwal Tugas CukuP",
-  description: "Aplikasi sederhana untuk mencatat jadwal tugas.",
+  description: "Web Official CukuP - Daftar Tugas.",
 };
 
 export default function RootLayout({
