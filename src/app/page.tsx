@@ -1,9 +1,12 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
-import TaskForm from '@/components/TaskForm'; // Path diupdate
-import TaskList from '@/components/TaskList'; // Path diupdate
-import { Task } from '@/lib/types'; // Path diupdate
-import { ListFilter, Moon, Sun } from 'lucide-react';
+import TaskForm from '@/components/TaskForm';
+import TaskList from '@/components/TaskList';
+import MonthlyCalendar from '@/components/MonthlyCalendar'; // Impor komponen baru
+import { Task } from '@/lib/types';
+import { ListFilter, Moon, Sun, List, Calendar } from 'lucide-react';
+
+type ViewMode = 'list' | 'calendar';
 
 export default function HomePage() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -11,12 +14,13 @@ export default function HomePage() {
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<'all' | 'thisMonth' | 'nextMonth'>('all');
   const [darkMode, setDarkMode] = useState(false);
+  const [viewMode, setViewMode] = useState<ViewMode>('list'); // State untuk mode tampilan
 
   const fetchTasks = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('/api/tasks'); // API path tetap sama
+      const response = await fetch('/api/tasks');
       if (!response.ok) {
         throw new Error('Gagal mengambil data tugas');
       }
@@ -34,7 +38,6 @@ export default function HomePage() {
   }, [fetchTasks]);
 
   useEffect(() => {
-    // Cek preferensi tema dari localStorage atau sistem
     const isDark = localStorage.getItem('darkMode') === 'true' || 
                    (!('darkMode' in localStorage) && typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches);
     setDarkMode(isDark);
@@ -79,26 +82,62 @@ export default function HomePage() {
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <TaskForm onTaskAdded={fetchTasks} />
 
-        <div className="mb-6 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+        <div className="mb-6">
             <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
                 <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4 sm:mb-0">Daftar Tugas</h2>
-                <div className="relative">
-                    <ListFilter size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
-                    <select
-                        value={filter}
-                        onChange={(e) => setFilter(e.target.value as 'all' | 'thisMonth' | 'nextMonth')}
-                        className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                
+                <div className="flex items-center space-x-2">
+                  {/* Tombol Pilihan Tampilan */}
+                  <div className="flex items-center bg-gray-200 dark:bg-gray-700 rounded-lg p-1">
+                    <button
+                      onClick={() => setViewMode('list')}
+                      className={`px-3 py-1 text-sm font-medium rounded-md transition ${
+                        viewMode === 'list' ? 'bg-white dark:bg-gray-900 shadow' : 'text-gray-600 dark:text-gray-300'
+                      }`}
                     >
-                        <option value="all">Semua Tugas</option>
-                        <option value="thisMonth">Bulan Ini</option>
-                        <option value="nextMonth">Bulan Depan</option>
-                    </select>
+                      <List size={20} className="sm:hidden" />
+                      <span className="hidden sm:inline">Daftar</span>
+                    </button>
+                    <button
+                      onClick={() => setViewMode('calendar')}
+                      className={`px-3 py-1 text-sm font-medium rounded-md transition ${
+                        viewMode === 'calendar' ? 'bg-white dark:bg-gray-900 shadow' : 'text-gray-600 dark:text-gray-300'
+                      }`}
+                    >
+                      <Calendar size={20} className="sm:hidden" />
+                      <span className="hidden sm:inline">Kalender</span>
+                    </button>
+                  </div>
+                  
+                  {/* Filter hanya muncul di mode Daftar */}
+                  {viewMode === 'list' && (
+                    <div className="relative">
+                      <ListFilter size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
+                      <select
+                          value={filter}
+                          onChange={(e) => setFilter(e.target.value as 'all' | 'thisMonth' | 'nextMonth')}
+                          className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                      >
+                          <option value="all">Semua Tugas</option>
+                          <option value="thisMonth">Bulan Ini</option>
+                          <option value="nextMonth">Bulan Depan</option>
+                      </select>
+                    </div>
+                  )}
                 </div>
             </div>
 
             {isLoading && <p className="text-center py-4">Memuat tugas...</p>}
             {error && <p className="text-center text-red-500 py-4">Error: {error}</p>}
-            {!isLoading && !error && <TaskList tasks={tasks} onTaskDeleted={fetchTasks} filter={filter} />}
+            
+            {/* Conditional Rendering berdasarkan viewMode */}
+            {!isLoading && !error && (
+              viewMode === 'list' ? (
+                <TaskList tasks={tasks} onTaskDeleted={fetchTasks} filter={filter} />
+              ) : (
+                <MonthlyCalendar tasks={tasks} />
+              )
+            )}
         </div>
       </main>
       <footer className="text-center py-6 text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700">
