@@ -68,7 +68,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
       <header className="bg-white dark:bg-gray-800 shadow-md">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-blue-600 dark:text-blue-400">Jadwal TugasKu</h1>
+          <h1 className="text-3xl font-bold text-blue-600 dark:text-blue-400">Jadwal Tugas CukuP</h1>
           <button
             onClick={toggleDarkMode}
             className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
