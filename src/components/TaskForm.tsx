@@ -70,7 +70,7 @@ export default function TaskForm({ onTaskAdded }: TaskFormProps) {
             id="taskName"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Contoh: Mengerjakan Laporan Proyek"
+            placeholder="Contoh: UTS SDA"
             className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
             required
           />
@@ -114,7 +114,7 @@ export default function TaskForm({ onTaskAdded }: TaskFormProps) {
             id="attachmentLink"
             value={attachmentLink}
             onChange={(e) => setAttachmentLink(e.target.value)}
-            placeholder="https://contoh.com/file.pdf"
+            placeholder="https://drive.google.com/..."
             className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
           />
         </div>
