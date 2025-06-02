@@ -1,13 +1,15 @@
 'use client';
 import { useState } from 'react';
 import { Task } from '@/lib/types';
-import { ChevronLeft, ChevronRight, Circle, Plus } from 'lucide-react';
+
+import { ChevronLeft, ChevronRight, Circle, Link as LinkIcon } from 'lucide-react';
 
 interface MonthlyCalendarProps {
   tasks: Task[];
 }
 
 export default function MonthlyCalendar({ tasks }: MonthlyCalendarProps) {
+  // ... (state dan fungsi handlePrevMonth, handleNextMonth, getTasksForDay tidak berubah) ...
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const daysOfWeek = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
@@ -27,14 +29,13 @@ export default function MonthlyCalendar({ tasks }: MonthlyCalendarProps) {
 
   const getTasksForDay = (day: number) => {
     return tasks.filter(task => {
-      // Menyesuaikan dengan zona waktu lokal untuk perbandingan yang akurat
       const taskDate = new Date(task.deadlineDate + 'T00:00:00');
       return (
         taskDate.getFullYear() === currentYear &&
         taskDate.getMonth() === currentMonth &&
         taskDate.getDate() === day
       );
-    }).sort((a,b) => (a.deadlineTime || "00:00").localeCompare(b.deadlineTime || "00:00")); // Urutkan tugas berdasarkan waktu
+    }).sort((a,b) => (a.deadlineTime || "00:00").localeCompare(b.deadlineTime || "00:00"));
   };
 
   return (
@@ -91,14 +92,27 @@ export default function MonthlyCalendar({ tasks }: MonthlyCalendarProps) {
                 {dayNumber}
               </div>
               <div className="space-y-1">
-                {tasksForDay.slice(0, 3).map(task => ( // Tampilkan maksimal 3 tugas
-                  <div key={task.id} className="flex items-center text-xs bg-blue-100 dark:bg-blue-900/60 p-1.5 rounded-md shadow-sm border-l-4 border-blue-500">
-                    <span className="font-medium text-gray-700 dark:text-gray-200 truncate">{task.name}</span>
+                {tasksForDay.slice(0, 2).map(task => ( // Tampilkan maksimal 2 tugas (agar tidak terlalu penuh)
+                  // UPDATE DI SINI UNTUK MENAMPILKAN IKON LINK
+                  <div key={task.id} className="flex items-center text-xs bg-blue-100 dark:bg-blue-900/60 p-1.5 rounded-md shadow-sm border-l-4 border-blue-500 group/task relative">
+                    <span className="font-medium text-gray-700 dark:text-gray-200 truncate flex-grow">{task.name}</span>
+                    {task.attachmentLink && (
+                      <a
+                        href={task.attachmentLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ml-1 text-blue-500 hover:text-blue-700 dark:hover:text-blue-300 flex-shrink-0 opacity-0 group-hover/task:opacity-100 transition-opacity"
+                        title="Buka Lampiran"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <LinkIcon size={12} />
+                      </a>
+                    )}
                   </div>
                 ))}
-                {tasksForDay.length > 3 && (
+                {tasksForDay.length > 2 && (
                    <div className="text-xs text-center text-gray-500 dark:text-gray-400 pt-1 font-semibold">
-                     + {tasksForDay.length - 3} tugas lagi
+                     + {tasksForDay.length - 2} tugas lagi
                    </div>
                 )}
               </div>

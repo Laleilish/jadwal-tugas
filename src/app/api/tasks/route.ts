@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { getAllTasks as getTasksFromKV, saveAllTasks as saveTasksToKV } from '@/lib/kv'; // Path diupdate
-import { Task } from '@/lib/types'; // Path diupdate
+import { getAllTasks as getTasksFromKV, saveAllTasks as saveTasksToKV } from '@/lib/kv';
+import { Task } from '@/lib/types';
 
 // GET /api/tasks - Mengambil semua tugas
 export async function GET() {
@@ -22,7 +22,8 @@ export async function GET() {
 // POST /api/tasks - Menambah tugas baru
 export async function POST(request: Request) {
   try {
-    const { name, deadlineDate, deadlineTime } = await request.json();
+    // AMBIL attachmentLink DARI REQUEST BODY
+    const { name, deadlineDate, deadlineTime, attachmentLink } = await request.json();
 
     if (!name || !deadlineDate) {
       return NextResponse.json({ message: 'Nama tugas dan tanggal deadline harus diisi' }, { status: 400 });
@@ -34,6 +35,7 @@ export async function POST(request: Request) {
       name,
       deadlineDate,
       deadlineTime: deadlineTime || "00:00", // Default waktu jika tidak diisi
+      attachmentLink: attachmentLink || undefined, // SIMPAN attachmentLink (atau undefined jika kosong)
       createdAt: Date.now(),
     };
     tasks.push(newTask);

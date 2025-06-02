@@ -1,34 +1,34 @@
 'use client';
-import { Task } from '@/lib/types'; // Path diupdate
-import { Trash2, CalendarDays, Clock } from 'lucide-react';
-import { useState } from 'react'; // useEffect tidak dipakai di sini
+import { Task } from '@/lib/types';
+// TAMBAHKAN LinkIcon dari lucide-react
+import { Trash2, CalendarDays, Clock, Link as LinkIcon } from 'lucide-react';
+import { useState } from 'react';
 
 interface TaskListProps {
   tasks: Task[];
-  onTaskDeleted: () => void; // Callback setelah tugas berhasil dihapus
+  onTaskDeleted: () => void;
   filter: 'all' | 'thisMonth' | 'nextMonth';
 }
 
 export default function TaskList({ tasks, onTaskDeleted, filter }: TaskListProps) {
-  const [isDeleting, setIsDeleting] = useState<string | null>(null); // Menyimpan ID tugas yang sedang dihapus
+  const [isDeleting, setIsDeleting] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   
   const handleDelete = async (taskId: string) => {
-    // Gunakan window.confirm karena confirm() standar tidak jalan di iframe
     if (!window.confirm('Apakah Anda yakin ingin menghapus tugas ini?')) {
       return;
     }
     setIsDeleting(taskId);
     setError(null);
     try {
-      const response = await fetch(`/api/tasks?id=${taskId}`, { // API path tetap sama
+      const response = await fetch(`/api/tasks?id=${taskId}`, {
         method: 'DELETE',
       });
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Gagal menghapus tugas');
       }
-      onTaskDeleted(); // Panggil callback untuk refresh
+      onTaskDeleted();
     } catch (err: any) {
       setError(err.message);
       console.error("Error deleting task:", err);
@@ -43,7 +43,7 @@ export default function TaskList({ tasks, onTaskDeleted, filter }: TaskListProps
   };
 
   const formatTime = (timeString: string) => {
-    if (!timeString || timeString === "00:00") return ""; // Jangan tampilkan jika default atau kosong
+    if (!timeString || timeString === "00:00") return "";
     const [hours, minutes] = timeString.split(':');
     return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
   };
@@ -55,7 +55,6 @@ export default function TaskList({ tasks, onTaskDeleted, filter }: TaskListProps
 
     return tasks.filter(task => {
       const taskDeadline = new Date(task.deadlineDate);
-      // Normalisasi waktu ke awal hari untuk perbandingan tanggal yang konsisten
       taskDeadline.setHours(0, 0, 0, 0); 
 
       if (filter === 'thisMonth') {
@@ -64,15 +63,13 @@ export default function TaskList({ tasks, onTaskDeleted, filter }: TaskListProps
       if (filter === 'nextMonth') {
         const nextMonthDate = new Date(now);
         nextMonthDate.setMonth(currentMonth + 1);
-         // Handle kasus Desember ke Januari tahun depan
         if (nextMonthDate.getMonth() === 0 && currentMonth === 11) {
              return taskDeadline.getMonth() === nextMonthDate.getMonth() && taskDeadline.getFullYear() === currentYear + 1;
         }
         return taskDeadline.getMonth() === nextMonthDate.getMonth() && taskDeadline.getFullYear() === nextMonthDate.getFullYear();
       }
-      // 'all' tasks or any other case
       return true; 
-    }).sort((a, b) => { // Urutkan lagi setelah filter
+    }).sort((a, b) => {
         const dateA = new Date(`${a.deadlineDate}T${a.deadlineTime || '00:00'}`);
         const dateB = new Date(`${b.deadlineDate}T${b.deadlineTime || '00:00'}`);
         return dateA.getTime() - dateB.getTime();
@@ -115,16 +112,12 @@ export default function TaskList({ tasks, onTaskDeleted, filter }: TaskListProps
         </thead>
         <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
           {filteredTasks.map((task) => {
-            const deadline = new Date(task.deadlineDate); // Tanggal deadline tanpa modifikasi waktu
+            const deadline = new Date(task.deadlineDate);
             const now = new Date();
-            
-            // Normalisasi 'now' dan 'deadline' ke awal hari untuk perbandingan tanggal
             const todayNormalized = new Date(now.getFullYear(), now.getMonth(), now.getDate());
             const deadlineNormalized = new Date(deadline.getFullYear(), deadline.getMonth(), deadline.getDate());
-
             const isOverdue = deadlineNormalized < todayNormalized;
             const isDueToday = deadlineNormalized.getTime() === todayNormalized.getTime();
-            
             let rowClass = "";
             if (isOverdue) rowClass = "bg-red-50 dark:bg-red-900/30";
             else if (isDueToday) rowClass = "bg-yellow-50 dark:bg-yellow-900/30";
@@ -132,7 +125,21 @@ export default function TaskList({ tasks, onTaskDeleted, filter }: TaskListProps
             return (
               <tr key={task.id} className={rowClass}>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900 dark:text-white">{task.name}</div>
+                  {/* MODIFIKASI DI SINI */}
+                  <div className="flex items-center">
+                    <span className="text-sm font-medium text-gray-900 dark:text-white">{task.name}</span>
+                    {task.attachmentLink && (
+                      <a
+                        href={task.attachmentLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ml-2 text-blue-500 hover:text-blue-700 dark:text-blue-300 dark:hover:text-blue-200"
+                        title="Buka Lampiran"
+                      >
+                        <LinkIcon size={16} /> {/* Pastikan LinkIcon sudah diimpor */}
+                      </a>
+                    )}
+                  </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center text-sm text-gray-700 dark:text-gray-300">

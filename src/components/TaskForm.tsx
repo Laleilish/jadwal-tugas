@@ -10,6 +10,7 @@ export default function TaskForm({ onTaskAdded }: TaskFormProps) {
   const [name, setName] = useState('');
   const [deadlineDate, setDeadlineDate] = useState('');
   const [deadlineTime, setDeadlineTime] = useState('');
+  const [attachmentLink, setAttachmentLink] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -28,7 +29,7 @@ export default function TaskForm({ onTaskAdded }: TaskFormProps) {
       const response = await fetch('/api/tasks', { // API path tetap sama
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, deadlineDate, deadlineTime }),
+        body: JSON.stringify({ name, deadlineDate, deadlineTime, attachmentLink })
       });
 
       if (!response.ok) {
@@ -39,7 +40,8 @@ export default function TaskForm({ onTaskAdded }: TaskFormProps) {
       setName('');
       setDeadlineDate('');
       setDeadlineTime('');
-      onTaskAdded(); // Panggil callback untuk refresh daftar tugas
+      setAttachmentLink('');
+      onTaskAdded(); 
     } catch (err: any) {
       setError(err.message);
     } finally {
