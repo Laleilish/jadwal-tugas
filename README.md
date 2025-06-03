@@ -1,7 +1,6 @@
 # Jadwal Tugas CukuP 📝✨
 
-Web untuk membantu Anda mencatat, mengelola, dan melihat jadwal tugas dengan mudah. Dibangun dengan Next.js, Tailwind CSS, dan disimpan secara permanen menggunakan Vercel KV.
-
+Web untuk membantu Anda mencatat, mengelola, dan melihat jadwal tugas dengan mudah. Dibangun dengan Next.js, Tailwind CSS.
 **[Lihat Demo Langsung](https://jadwal-tugas.vercel.app/)** 🚀 
 
 
