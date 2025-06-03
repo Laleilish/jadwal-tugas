@@ -6,13 +6,13 @@ const kvClient = createClient({
   token: process.env.KV_REST_API_TOKEN!,
 });
 
-const TASKS_KEY = "all_tasks"; // Kunci utama untuk menyimpan semua tugas
+const TASKS_KEY = "all_tasks"; 
 
 // Fungsi untuk mendapatkan semua tugas
 export async function getAllTasks(): Promise<Task[]> {
   try {
     const tasks = await kvClient.get<Task[]>(TASKS_KEY);
-    return tasks || []; // Kembalikan array kosong jika tidak ada tugas
+    return tasks || []; 
   } catch (error) {
     console.error("Error fetching tasks from KV:", error);
     return [];

@@ -9,7 +9,7 @@ interface MonthlyCalendarProps {
 }
 
 export default function MonthlyCalendar({ tasks }: MonthlyCalendarProps) {
-  // ... (state dan fungsi handlePrevMonth, handleNextMonth, getTasksForDay tidak berubah) ...
+ 
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const daysOfWeek = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];

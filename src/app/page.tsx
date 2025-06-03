@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import TaskForm from '@/components/TaskForm';
 import TaskList from '@/components/TaskList';
-import MonthlyCalendar from '@/components/MonthlyCalendar'; // Impor komponen baru
+import MonthlyCalendar from '@/components/MonthlyCalendar'; 
 import { Task } from '@/lib/types';
 import { ListFilter, Moon, Sun, List, Calendar } from 'lucide-react';
 
@@ -14,7 +14,7 @@ export default function HomePage() {
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<'all' | 'thisMonth' | 'nextMonth'>('all');
   const [darkMode, setDarkMode] = useState(false);
-  const [viewMode, setViewMode] = useState<ViewMode>('list'); // State untuk mode tampilan
+  const [viewMode, setViewMode] = useState<ViewMode>('list'); 
 
   const fetchTasks = useCallback(async () => {
     setIsLoading(true);
