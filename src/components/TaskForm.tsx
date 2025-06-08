@@ -54,7 +54,7 @@ export default function TaskForm({ onTaskAdded }: TaskFormProps) {
     <form onSubmit={handleSubmit} className="mb-8 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
       <div className="flex flex-row flex-1 items-center align-middle">
         <h2 className="text-2xl font-semibold text-gray-800 dark:text-white flex-1">Tambah Tugas Baru</h2>
-        <button className='mr-auto' type="button" onClick={() => setCollapse(!isCollapse)}><svg data-accordion-icon className={(isCollapse ? '' : 'rotate-180 ') + "w-3 h-3 shrink-0"} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+        <button className='mr-auto' type="button" onClick={() => setCollapse(!isCollapse)}><svg data-accordion-icon className={(isCollapse ? 'rotate-180 ' : '') + "w-3 h-3 shrink-0"} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
       </svg></button>
       </div>
