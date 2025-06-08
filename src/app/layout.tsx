@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Jadwal Tugas CukuP",
   description: "Web Official CukuP - Daftar Tugas.",
   icons: {
-    icon: "/favicon.ico", 
+    icon: '/favicon.ico', 
   },
 };
 

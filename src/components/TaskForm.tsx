@@ -13,7 +13,7 @@ export default function TaskForm({ onTaskAdded }: TaskFormProps) {
   const [attachmentLink, setAttachmentLink] = useState(''); 
   const [submitLink, setSubmitLink] = useState(''); 
   const [isLoading, setIsLoading] = useState(false);
-  const [isCollapse, setCollapse] = useState(false);
+  const [isCollapse, setCollapse] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: FormEvent) => {
