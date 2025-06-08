@@ -23,7 +23,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     // AMBIL attachmentLink DARI REQUEST BODY
-    const { name, deadlineDate, deadlineTime, attachmentLink } = await request.json();
+    const { name, deadlineDate, deadlineTime, attachmentLink, submitionLink } = await request.json();
 
     if (!name || !deadlineDate) {
       return NextResponse.json({ message: 'Nama tugas dan tanggal deadline harus diisi' }, { status: 400 });
@@ -36,6 +36,7 @@ export async function POST(request: Request) {
       deadlineDate,
       deadlineTime: deadlineTime || "00:00", // Default waktu jika tidak diisi
       attachmentLink: attachmentLink || undefined, // SIMPAN attachmentLink (atau undefined jika kosong)
+      submitionLink: submitionLink || undefined,
       createdAt: Date.now(),
     };
     tasks.push(newTask);

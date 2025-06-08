@@ -11,6 +11,7 @@ export default function TaskForm({ onTaskAdded }: TaskFormProps) {
   const [deadlineDate, setDeadlineDate] = useState('');
   const [deadlineTime, setDeadlineTime] = useState('');
   const [attachmentLink, setAttachmentLink] = useState(''); 
+  const [submitionLink, setSubmitionLink] = useState(''); 
   const [isLoading, setIsLoading] = useState(false);
   const [isCollapse, setCollapse] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -30,7 +31,7 @@ export default function TaskForm({ onTaskAdded }: TaskFormProps) {
       const response = await fetch('/api/tasks', { 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, deadlineDate, deadlineTime, attachmentLink }), 
+        body: JSON.stringify({ name, deadlineDate, deadlineTime, attachmentLink, submitionLink }), 
       });
 
       if (!response.ok) {
@@ -42,6 +43,7 @@ export default function TaskForm({ onTaskAdded }: TaskFormProps) {
       setDeadlineDate('');
       setDeadlineTime('');
       setAttachmentLink(''); 
+      setSubmitionLink(''); 
       onTaskAdded(); 
     } catch (err: any) {
       setError(err.message);
@@ -54,7 +56,7 @@ export default function TaskForm({ onTaskAdded }: TaskFormProps) {
     <form onSubmit={handleSubmit} className="mb-8 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
       <div className="flex flex-row flex-1 items-center align-middle">
         <h2 className="text-2xl font-semibold text-gray-800 dark:text-white flex-1">Tambah Tugas Baru</h2>
-        <button className='mr-auto' type="button" onClick={() => setCollapse(!isCollapse)}><svg data-accordion-icon className={(isCollapse ? 'rotate-180 ' : '') + "w-3 h-3 shrink-0"} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+        <button className='mr-auto p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700' type="button" onClick={() => setCollapse(!isCollapse)}><svg data-accordion-icon className={(isCollapse ? 'rotate-180 ' : '') + "w-3 h-3 shrink-0"} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
       </svg></button>
       </div>
@@ -127,14 +129,14 @@ export default function TaskForm({ onTaskAdded }: TaskFormProps) {
             />
           </div>
           <div>
-            <label htmlFor="attachmentLink" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label htmlFor="submitionLink" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Link Pengumpulan (Opsional)
             </label>
             <input
               type="url"
-              id="attachmentLink"
-              value={attachmentLink}
-              onChange={(e) => setAttachmentLink(e.target.value)}
+              id="submitionLink"
+              value={submitionLink}
+              onChange={(e) => setSubmitionLink(e.target.value)}
               placeholder="https://spot.upi.edu/..."
               className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
             />

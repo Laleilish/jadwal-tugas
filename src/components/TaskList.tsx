@@ -138,6 +138,17 @@ export default function TaskList({ tasks, onTaskDeleted, filter }: TaskListProps
                         <LinkIcon size={16} /> {/* Pastikan LinkIcon sudah diimpor */}
                       </a>
                     )}
+                    {task.submitionLink && (
+                      <a
+                        href={task.submitionLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ml-2 text-blue-500 hover:text-blue-700 dark:text-blue-300 dark:hover:text-blue-200"
+                        title="Kumpulkan Tugas"
+                      >
+                        <LinkIcon size={16} /> {/* Pastikan LinkIcon sudah diimpor */}
+                      </a>
+                    )}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">

@@ -4,5 +4,6 @@ export interface Task {
   deadlineDate: string; // Format YYYY-MM-DD
   deadlineTime: string; // Format HH:MM
   attachmentLink?: string;
+  submitionLink?: string;
   createdAt: number; // Timestamp
 }
