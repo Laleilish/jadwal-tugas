@@ -11,7 +11,7 @@ export default function TaskForm({ onTaskAdded }: TaskFormProps) {
   const [deadlineDate, setDeadlineDate] = useState('');
   const [deadlineTime, setDeadlineTime] = useState('');
   const [attachmentLink, setAttachmentLink] = useState(''); 
-  const [submitionLink, setSubmitionLink] = useState(''); 
+  const [submitLink, setSubmitLink] = useState(''); 
   const [isLoading, setIsLoading] = useState(false);
   const [isCollapse, setCollapse] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -31,7 +31,7 @@ export default function TaskForm({ onTaskAdded }: TaskFormProps) {
       const response = await fetch('/api/tasks', { 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, deadlineDate, deadlineTime, attachmentLink, submitionLink }), 
+        body: JSON.stringify({ name, deadlineDate, deadlineTime, attachmentLink, submitLink }), 
       });
 
       if (!response.ok) {
@@ -43,7 +43,7 @@ export default function TaskForm({ onTaskAdded }: TaskFormProps) {
       setDeadlineDate('');
       setDeadlineTime('');
       setAttachmentLink(''); 
-      setSubmitionLink(''); 
+      setSubmitLink(''); 
       onTaskAdded(); 
     } catch (err: any) {
       setError(err.message);
@@ -129,14 +129,14 @@ export default function TaskForm({ onTaskAdded }: TaskFormProps) {
             />
           </div>
           <div>
-            <label htmlFor="submitionLink" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label htmlFor="submitLink" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Link Pengumpulan (Opsional)
             </label>
             <input
               type="url"
-              id="submitionLink"
-              value={submitionLink}
-              onChange={(e) => setSubmitionLink(e.target.value)}
+              id="submitLink"
+              value={submitLink}
+              onChange={(e) => setSubmitLink(e.target.value)}
               placeholder="https://spot.upi.edu/..."
               className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
             />
