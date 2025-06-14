@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 import TaskForm from '@/components/TaskForm';
 import TaskList from '@/components/TaskList';
 import MonthlyCalendar from '@/components/MonthlyCalendar'; 
+import Clock from '@/components/Clock';
 import { Task } from '@/lib/types';
 import { ListFilter, Moon, Sun, List, Calendar } from 'lucide-react';
 
@@ -80,7 +81,11 @@ export default function HomePage() {
       </header>
 
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <TaskForm onTaskAdded={fetchTasks} />
+        {/* Form & Jam */}
+        <div className='flex flex-col-reverse sm:flex-row justify-between gap-5'>
+          <TaskForm onTaskAdded={fetchTasks} />
+          <Clock/>
+        </div>
 
         <div className="mb-6">
             <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
