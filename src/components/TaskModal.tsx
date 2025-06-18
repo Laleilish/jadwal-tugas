@@ -17,7 +17,7 @@ export default function TaskModal(task: Task) {
     <div id={task.id}>
       <button onClick={() => setOpen(true)} className="">
         <span className="text-sm font-medium text-gray-900 dark:text-white">
-          Tugas
+          {task.name}
         </span>
       </button>
       <Dialog open={open} onClose={setOpen} className="relative z-10">
