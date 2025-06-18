@@ -68,7 +68,7 @@ export default function TaskModal(task: Task) {
                   >
                     <span>Tugas</span>
                     <div className="w-4 h-4 sm:w-5 sm:h-5">
-                      <LinkIcon className="w-full h-full" />
+                      <LinkIcon className="w-full h-full text-blue-500" />
                     </div>
                   </a>
                   <a
@@ -77,7 +77,7 @@ export default function TaskModal(task: Task) {
                   >
                     <span>Submit</span>
                     <div className="w-4 h-4 sm:w-5 sm:h-5">
-                      <LinkIcon className="w-full h-full" />
+                      <LinkIcon className="w-full h-full text-blue-500" />
                     </div>
                   </a>
                 </div>

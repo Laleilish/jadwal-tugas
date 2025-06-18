@@ -187,7 +187,7 @@ export default function TaskList({
                       deadlineTime={formatTime(task.deadlineTime)}
                       createdAt={task.createdAt}
                       attachmentLink={task.attachmentLink}
-                      submitLink={task.attachmentLink}
+                      submitLink={task.submitLink}
                     />
                     {task.attachmentLink && (
                       <a
