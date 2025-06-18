@@ -6,7 +6,6 @@ import MonthlyCalendar from '@/components/MonthlyCalendar';
 import Clock from '@/components/Clock';
 import { Task } from '@/lib/types';
 import { ListFilter, Moon, Sun, List, Calendar } from 'lucide-react';
-
 type ViewMode = 'list' | 'calendar';
 
 export default function HomePage() {
