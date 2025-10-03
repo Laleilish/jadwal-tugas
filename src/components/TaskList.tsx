@@ -7,7 +7,7 @@ import TaskModal from "./TaskModal";
 interface TaskListProps {
   tasks: Task[];
   onTaskDeleted: () => void;
-  filter: "all" | "thisMonth" | "nextMonth";
+  filter: "all" | "thisMonth" | "nextMonth" | "thisWeek";
 }
 
 export default function TaskList({
@@ -61,6 +61,14 @@ export default function TaskList({
     const currentMonth = now.getMonth();
     const currentYear = now.getFullYear();
 
+    const startOfWeek = new Date(now);
+    startOfWeek.setDate(now.getDate() - ((now.getDay() + 6) % 7)); // Senin
+    startOfWeek.setHours(0, 0, 0, 0);
+
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6); // Minggu
+    endOfWeek.setHours(23, 59, 59, 999);
+
     return tasks
       .filter((task) => {
         const taskDeadline = new Date(task.deadlineDate);
@@ -85,6 +93,9 @@ export default function TaskList({
             taskDeadline.getMonth() === nextMonthDate.getMonth() &&
             taskDeadline.getFullYear() === nextMonthDate.getFullYear()
           );
+        }
+        if (filter === "thisWeek") {
+        return taskDeadline >= startOfWeek && taskDeadline <= endOfWeek;
         }
         return true;
       })

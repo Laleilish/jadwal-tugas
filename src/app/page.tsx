@@ -12,7 +12,7 @@ export default function HomePage() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [filter, setFilter] = useState<'all' | 'thisMonth' | 'nextMonth'>('all');
+  const [filter, setFilter] = useState<'all' | 'thisMonth' | 'nextMonth' | 'thisWeek'>('all');
   const [darkMode, setDarkMode] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>('list'); 
 
@@ -119,10 +119,11 @@ export default function HomePage() {
                       <ListFilter size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
                       <select
                           value={filter}
-                          onChange={(e) => setFilter(e.target.value as 'all' | 'thisMonth' | 'nextMonth')}
+                          onChange={(e) => setFilter(e.target.value as 'all' | 'thisMonth' | 'nextMonth' | 'thisWeek')}
                           className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                       >
                           <option value="all">Semua Tugas</option>
+                          <option value="thisWeek">Minggu Ini</option>
                           <option value="thisMonth">Bulan Ini</option>
                           <option value="nextMonth">Bulan Depan</option>
                       </select>
