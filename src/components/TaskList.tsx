@@ -92,7 +92,7 @@ export default function TaskList({
           startDate.setHours(0, 0, 0, 0);
 
           const endDate = new Date(now);
-          endDate.setDate(now.getDate()-now.getDay() + 6);
+          endDate.setDate(now.getDate() + 6);
           endDate.setHours(23, 59, 59, 999);
       
           return taskDeadline >= startDate && taskDeadline <= endDate;
