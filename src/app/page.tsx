@@ -12,7 +12,7 @@ export default function HomePage() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [filter, setFilter] = useState<'all' | 'thisMonth' | 'nextMonth' | 'thisWeek'>('all');
+  const [filter, setFilter] = useState<'all' | 'thisMonth' | 'nextMonth' | 'thisWeek'>('thisWeek');
   const [darkMode, setDarkMode] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>('list'); 
 
